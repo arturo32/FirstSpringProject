@@ -1,10 +1,15 @@
 package br.ufrn.imd.sa.sa.model;
 
 
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -22,6 +27,9 @@ public class Turma {
 	@OneToOne
 	private Professor professor;
 	
+//	@OneToMany(cascade=CascadeType.ALL)
+//	private List<Aluno> alunos;
+//	
 	
 	public int getId() {
 		return id;

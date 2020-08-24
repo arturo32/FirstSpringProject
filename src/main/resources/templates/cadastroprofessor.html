@@ -13,7 +13,7 @@
 		<input name="cpf" type="text" placeholder="CPF"  th:value="${professor}? ${professor.cpf} : _"> <br/>
 		<label>Disciplina</label> <br/>
 		<input name="disciplina" type="text" placeholder="Disciplina"  th:value="${professor}? ${professor.disciplina} : _"> <br/>
-		<button type="submit">Cadastrar</button>
+		<button type="submit"  th:text="${titulo}? ${titulo} : _" >Cadastrar</button>
 	</form>
 </body>
 </html>

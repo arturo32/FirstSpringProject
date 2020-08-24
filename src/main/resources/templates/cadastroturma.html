@@ -10,8 +10,8 @@
 		<label>Sala</label> <br/>
 		<input name="sala" type="text" placeholder="Sala" th:value="${turma}? ${turma.sala} : _"> <br/>
 		<label>Professor</label> <br/>
-		<input name="professor.nome" type="text" placeholder="Professor" th:value="${turma}? ${turma.professor.nome} : _">> <br/>
-		<button type="submit">Cadastrar</button>
+		<input name="professor.nome" type="text" placeholder="Professor" th:value="${turma}? ${turma.professor.nome} : _"> <br/>
+		<button type="submit"  th:text="${titulo}? ${titulo} : _" >Cadastrar</button>
 	</form>
 </body>
 </html>

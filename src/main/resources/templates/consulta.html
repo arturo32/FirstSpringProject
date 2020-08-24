@@ -1,34 +1,73 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3;org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
-<meta charset="UTF-8">
-<title th:text = "${titulo}">Consultar</title>
+	<meta charset="UTF-8">
+	<link th:href="@{/consulta.css}" rel="stylesheet" />
+	<title th:text = "${titulo}">Consultar</title>
 </head>
 <body>
 <h1 th:text = "|Consultar ${titulo}|" >Consultar</h1>
-
-	<table>
-		
+	
+	
+	<table th:if="${turmas}">
 		<!-- Turmas -->
+		<tr>
+			<th>Sala</th>
+			<th>Professor</th>
+			<th>Qtd. de Alunos</th>
+			<th>Ações</th>
+		</tr>
 		<tr th:each = "turma : ${turmas}">
 			<td th:text = "${turma.sala}"></td>
 			<td th:text = "${turma.professor.nome}"></td>
 			<td th:text = "${alunosDasTurmas[turmaStat.index]}"></td>
+			<td >
+				<a th:href="|atualizarturma/${turma.id}|">Atualizar</a> 
+				<a th:href="|deletarturma/${turma.id}|">Deletar</a> 
+			</td>
 		</tr>
+	</table>
+	
+	
 		
+	<table th:if="${alunos}">
 		<!-- Alunos -->
+		<tr>
+			<th>Nome</th>
+			<th>CPF</th>
+			<th>Matrícula</th>
+			<th>Sala</th>
+			<th>Ações</th>
+		</tr>
 		<tr th:each = "aluno : ${alunos}">
 			<td th:text = "${aluno.nome}"></td>
 			<td th:text = "${aluno.cpf}"></td>
 			<td th:text = "${aluno.matricula}"></td>
 			<td th:text = "${aluno.turma.sala}"></td>
+			<td >
+				<a th:href="|atualizaraluno/${aluno.id}|">Atualizar</a> 
+				<a th:href="|deletaraluno/${aluno.id}|">Deletar</a> 
+			</td>
 		</tr>
-		
+	</table>
+	
+	
+	<table th:if="${professores}">
 		<!-- Professores -->
+		<tr>
+			<th>Nome</th>
+			<th>CPF</th>
+			<th>Disciplina</th>
+			<th>Ações</th>
+		</tr>
 		<tr th:each = "professor : ${professores}">
 			<td th:text = "${professor.nome}"></td>
 			<td th:text = "${professor.cpf}"></td>
 			<td th:text = "${professor.disciplina}"></td>
+			<td >
+				<a th:href="|atualizarprofessor/${professor.id}|">Atualizar</a> 
+				<a th:href="|deletarprofessor/${professor.id}|">Deletar</a> 
+			</td>
 		</tr>
 		
 	</table>

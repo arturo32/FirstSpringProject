@@ -9,7 +9,7 @@ import br.ufrn.imd.sa.sa.repository.ProfessorRepository;
 import br.ufrn.imd.sa.sa.repository.TurmaRepository;
 
 @Controller
-public class GeneralController {
+public class GeralController {
 	
 	@Autowired
 	ProfessorRepository ProfessorDB;

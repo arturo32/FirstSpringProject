@@ -6,4 +6,5 @@ import br.ufrn.imd.sa.sa.model.Turma;
 public interface TurmaRepository extends JpaRepository<Turma, Integer> {
 	
 	public Turma findBySala(String sala);
+
 }

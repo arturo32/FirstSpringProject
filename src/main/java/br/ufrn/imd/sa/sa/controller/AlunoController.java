@@ -21,7 +21,7 @@ public class AlunoController {
 	AlunoRepository AlunoBC;
 	
 	@Autowired
-	TurmaRepository TurmaDB;
+	TurmaRepository TurmaBC;
 	
 	//Retorna a página de cadastro do aluno
 	@RequestMapping("/cadastroaluno")
@@ -33,7 +33,7 @@ public class AlunoController {
 	@PostMapping("/aluno")
 	public String salvarAluno(Aluno aluno) {
 
-		Turma turmaDoAluno =  TurmaDB.findBySala(aluno.getTurma().getSala());
+		Turma turmaDoAluno =  TurmaBC.findBySala(aluno.getTurma().getSala());
 		
 		/*Se a turma não existir no banco de dados, 
 		a mesma página de cadastro é retornada*/
@@ -85,7 +85,7 @@ public class AlunoController {
 		Aluno aluno = AlunoBC.findById(id).orElse(new Aluno());
 		
 		//Procura turma pelo número da sala
-		Turma turmaDoAluno =  TurmaDB.findBySala(alunoAtualizado.getTurma().getSala());
+		Turma turmaDoAluno =  TurmaBC.findBySala(alunoAtualizado.getTurma().getSala());
 		
 		/*Se a turma não existir no banco de dados, 
 		a mesma página de cadastro é retornada*/

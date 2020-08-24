@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.imd.sa.sa.model.Professor;
@@ -18,15 +19,17 @@ import br.ufrn.imd.sa.sa.repository.TurmaRepository;
 public class TurmaController {
 	
 	@Autowired
-	TurmaRepository TurmaDB;
+	TurmaRepository TurmaBC;
 	
 	@Autowired
-	ProfessorRepository ProfessorDB;
+	ProfessorRepository ProfessorBC;
 	
 	@Autowired
-	AlunoRepository AlunoDB;
+	AlunoRepository AlunoBC;
 	
-	@RequestMapping("/cadastroturma")
+	
+	//Retorna página de cadastro de turma
+	@GetMapping("/cadastroturma")
 	public String cadastroTurma( ) {
 		return "cadastroturma";
 	}
@@ -35,7 +38,7 @@ public class TurmaController {
 	@PostMapping("/turma")
 	public String salvarTurma(Turma turma) {
 		
-		Professor professorDaTurma = ProfessorDB.findByNome(turma.getProfessor().getNome());
+		Professor professorDaTurma = ProfessorBC.findByNome(turma.getProfessor().getNome());
 		
 		/*Se o professor não existir no banco de dados, 
 		a mesma página de cadastro é retornada*/
@@ -45,22 +48,22 @@ public class TurmaController {
 		
 		//Se não, a turma é acrescentada ao banco de dados
 		turma.setProfessor(professorDaTurma);
-		TurmaDB.save(turma);
+		TurmaBC.save(turma);
 		
 		return "index";
 	}
 	
 	//Lista turmas
-	@RequestMapping("/turmas")
+	@GetMapping("/turmas")
 	public ModelAndView listarTurmas() {
 		
 		ModelAndView mv = new ModelAndView("consulta");
-		List<Turma> turmas = TurmaDB.findAll();
+		List<Turma> turmas = TurmaBC.findAll();
 		
 		int[] alunos = new int[turmas.size()]; 
 		
 		for(int i = 0; i < turmas.size(); ++i) {
-			alunos[i] = (int) AlunoDB.countByTurma(turmas.get(i));
+			alunos[i] = (int) AlunoBC.countByTurma(turmas.get(i));
 		}
 		
 		String titulo = "Turmas";
@@ -69,6 +72,60 @@ public class TurmaController {
 		mv.addObject("alunosDasTurmas", alunos);
 		mv.addObject("titulo", titulo);
 		return mv;
+	}
+	
+	//Retorna página para atualizar dados de um turma
+	@GetMapping("/atualizarturma/{id}")
+	public ModelAndView atualizaTurma(@PathVariable int id) {
+		
+		ModelAndView mv = new ModelAndView("cadastroturma");
+		
+		String titulo = "Atualizar";
+		
+		Turma turma = TurmaBC.findById(id).orElse(new Turma());
+	
+		mv.addObject("turma", turma);
+		mv.addObject("titulo", titulo);
+		
+		return mv;
+	}
+	
+	//Atualiza dados de uma turma no banco de dados
+	@PostMapping("atualizarturma/{id}")
+	public String atualizarTurma(@PathVariable int id, Turma turmaAtualizada) {
+		
+		//Procura professor da turma pelo nome
+		Professor professorDaTurma =  ProfessorBC.findByNome(turmaAtualizada.getProfessor().getNome());
+		
+		/*Se o professor não existir no banco de dados, 
+		a mesma página de cadastro é retornada*/
+		if(professorDaTurma == null) {
+			return "atualizarturma/" + id;
+		}
+		
+		//Acha antiga turma no banco de dados pelo ID
+		Turma turma = TurmaBC.findById(id).orElse(new Turma());
+		
+		/*Define o ID da nova turma como o ID da antiga turma
+		e atualiza seus dados no banco de dados*/
+		turmaAtualizada.setId(turma.getId());
+		turmaAtualizada.setProfessor(professorDaTurma);
+		TurmaBC.save(turmaAtualizada);
+		
+		return "index";
+	}
+	
+	@GetMapping("deletarturma/{id}")
+	public String deletarTurma(@PathVariable int id) {
+		
+		//Deleta, primeiramente, todos os alunos que fazem parte da turma
+//		AlunoBC.deleteByTurma(TurmaBC.findById(id).orElse(new Turma()));
+		
+		//Deleta turma
+		TurmaBC.deleteById(id);
+		
+		//Retorna para página principal
+		return "index";
 	}
 
 	

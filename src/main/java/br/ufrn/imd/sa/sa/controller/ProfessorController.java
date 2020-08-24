@@ -18,11 +18,14 @@ public class ProfessorController {
 	@Autowired
 	ProfessorRepository ProfessorBC;
 	
+	
+	//Retorna página de cadastro de professor
 	@RequestMapping("/cadastroprofessor")
-	public String cadastrarProfessor( ) {
+	public String cadastroProfessor( ) {
 		return "cadastroprofessor";
 	}
 	
+	//Salva novo professor no banco de dados
 	@PostMapping("/professor")
 	public String salvarProfessor(Professor professor) {
 		ProfessorBC.save(professor);
