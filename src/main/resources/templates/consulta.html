@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3;org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<title th:text = "${titulo}">Consultar</title>
+</head>
+<body>
+<h1 th:text = "|Consultar ${titulo}|" >Consultar</h1>
+
+	<table>
+		
+		<!-- Turmas -->
+		<tr th:each = "turma : ${turmas}">
+			<td th:text = "${turma.sala}"></td>
+			<td th:text = "${turma.professor.nome}"></td>
+			<td th:text = "${alunosDasTurmas[turmaStat.index]}"></td>
+		</tr>
+		
+		<!-- Alunos -->
+		<tr th:each = "aluno : ${alunos}">
+			<td th:text = "${aluno.nome}"></td>
+			<td th:text = "${aluno.cpf}"></td>
+			<td th:text = "${aluno.matricula}"></td>
+			<td th:text = "${aluno.turma.sala}"></td>
+		</tr>
+		
+		<!-- Professores -->
+		<tr th:each = "professor : ${professores}">
+			<td th:text = "${professor.nome}"></td>
+			<td th:text = "${professor.cpf}"></td>
+			<td th:text = "${professor.disciplina}"></td>
+		</tr>
+		
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3;org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<title th:text="${titulo}? |${titulo} Aluno| : _">Cadastrar Aluno</title>
+</head>
+<body>
+	<h1 th:text="${titulo}? |${titulo} Aluno| : _"> Cadastrar Aluno</h1>
+	<form th:action="${titulo}? _ : 'aluno'" method="post" >
+		<label>Nome</label> <br/>
+		<input name="nome" type="text" placeholder="Nome"  th:value="${aluno}? ${aluno.nome} : _"> <br/>
+		<label>CPF</label> <br/>
+		<input name="cpf" type="text" placeholder="CPF"  th:value="${aluno}? ${aluno.cpf} : _"> <br/>
+		<label>Matrícula</label> <br/>
+		<input name="matricula" type="number" placeholder="Matricula"  th:value="${aluno}? ${aluno.matricula} : _"> <br/>
+		<label>Turma</label> <br/>
+		<input name="turma.sala" type="text" placeholder="Sala da turma" th:value="${aluno}? (${aluno.turma.sala}) : _"> <br/>
+		<button type="submit" th:text="${titulo}? ${titulo} : _" >Cadastrar</button>
+	</form>
+</body>
+</html>

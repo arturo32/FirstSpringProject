@@ -2,14 +2,16 @@ package br.ufrn.imd.sa.sa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Professor {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
 	private String nome;
 	private String disciplina;
 	private String cpf;
@@ -41,5 +43,10 @@ public class Professor {
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	@Override
+	public String toString() {
+		return "Professor [id=" + id + ", nome=" + nome + ", disciplina=" + disciplina + ", cpf=" + cpf + "]";
 	}
 }
