@@ -2,20 +2,23 @@ package br.ufrn.imd.sa.sa.model;
 
 
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 
 
 @Entity
+@Table(name="turmas")
 public class Turma {
 	
 	@Id
@@ -25,11 +28,13 @@ public class Turma {
 	private String sala;
 	
 	@OneToOne
+	@JoinColumn(name="professor_id")
 	private Professor professor;
 	
-//	@OneToMany(cascade=CascadeType.ALL)
-//	private List<Aluno> alunos;
-//	
+	@OneToMany(mappedBy="turma", cascade=CascadeType.ALL)
+	private Set<Aluno> alunos;
+	
+	
 	
 	public int getId() {
 		return id;
@@ -51,6 +56,15 @@ public class Turma {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
+	
+	
+	public Set<Aluno> getAlunos() {
+		return alunos;
+	}
+	public void setAlunos(Set<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+	
 	
 	
 }

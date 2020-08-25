@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,6 +74,19 @@ public class ProfessorController {
 		professorAtualizado.setId(professor.getId());
 		ProfessorBC.save(professorAtualizado);
 		
+		return "index";
+	}
+	
+	/*Deleta professor do banco de dados,
+	junto com sua turma e os alunos dessa
+	turma*/
+	@GetMapping("deletarprofessor/{id}")
+	public String deletarTurma(@PathVariable int id) {
+		
+		//Deleta professor
+		ProfessorBC.deleteById(id);		
+		
+		//Retorna para página principal
 		return "index";
 	}
 	

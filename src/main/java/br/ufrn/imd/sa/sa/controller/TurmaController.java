@@ -36,21 +36,39 @@ public class TurmaController {
 	
 	//Salva nova turma no banco de dados
 	@PostMapping("/turma")
-	public String salvarTurma(Turma turma) {
+	public ModelAndView salvarTurma(Turma turma) {
 		
 		Professor professorDaTurma = ProfessorBC.findByNome(turma.getProfessor().getNome());
 		
+		ModelAndView mv = new ModelAndView("cadastroturma");
+		
+		String mensagemErro = null;
+		
 		/*Se o professor não existir no banco de dados, 
-		a mesma página de cadastro é retornada*/
+		a mesma página de cadastro é retornada com uma mensagem de erro*/
 		if(professorDaTurma == null) {
-			return "cadastroturma";
+			mensagemErro = turma.getProfessor().getNome() + " não está cadastrado no banco de dados. Tente novamente.";
+			
 		}
 		
-		//Se não, a turma é acrescentada ao banco de dados
-		turma.setProfessor(professorDaTurma);
-		TurmaBC.save(turma);
+		/*Se o professor ja estive em uma turma, a mesma página de 
+		cadastro é retornada com uma mensagem de erro*/
+		else if(TurmaBC.findByProfessor(professorDaTurma) != null) {
+			mensagemErro = turma.getProfessor().getNome() + " já está em uma turma. Tente novamente.";
+		}
 		
-		return "index";
+		/*Se não, a turma é acrescentada ao banco de dados
+		e a página principal é retornada*/
+		else {		
+			turma.setProfessor(professorDaTurma);
+			TurmaBC.save(turma);
+			mv.clear();
+			mv.setViewName("index");
+		}
+		
+		mv.addObject("mensagemErro", mensagemErro);
+		
+		return mv;
 	}
 	
 	//Lista turmas
@@ -92,27 +110,49 @@ public class TurmaController {
 	
 	//Atualiza dados de uma turma no banco de dados
 	@PostMapping("atualizarturma/{id}")
-	public String atualizarTurma(@PathVariable int id, Turma turmaAtualizada) {
+	public ModelAndView atualizarTurma(@PathVariable int id, Turma turmaAtualizada) {
 		
 		//Procura professor da turma pelo nome
 		Professor professorDaTurma =  ProfessorBC.findByNome(turmaAtualizada.getProfessor().getNome());
 		
+		ModelAndView mv = new ModelAndView("index");
+		
+		String mensagemErro = null;
+		
 		/*Se o professor não existir no banco de dados, 
-		a mesma página de cadastro é retornada*/
+		a página principal é retornada com um mensagem de erro*/
 		if(professorDaTurma == null) {
-			return "atualizarturma/" + id;
+			mensagemErro = turmaAtualizada.getProfessor().getNome() + " não está cadastrado no banco de dados. Tente novamente.";
 		}
 		
-		//Acha antiga turma no banco de dados pelo ID
-		Turma turma = TurmaBC.findById(id).orElse(new Turma());
+		/*Se o professor ja estive em uma turma, a mesma página de 
+		cadastro é retornada com uma mensagem de erro*/
+		else if(TurmaBC.findByProfessor(professorDaTurma) != null) {
+			mensagemErro = turmaAtualizada.getProfessor().getNome() + " já está em uma turma. Tente novamente.";
+		}
 		
-		/*Define o ID da nova turma como o ID da antiga turma
-		e atualiza seus dados no banco de dados*/
-		turmaAtualizada.setId(turma.getId());
-		turmaAtualizada.setProfessor(professorDaTurma);
-		TurmaBC.save(turmaAtualizada);
 		
-		return "index";
+		/*Se existir, a turma atualizada é salva no banco de dados 
+		  e a página principal é retornada*/
+		else {
+			//Acha antiga turma no banco de dados pelo ID
+			Turma turma = TurmaBC.findById(id).orElse(new Turma());
+			
+			/*Define o ID da nova turma como o ID da antiga turma
+			e atualiza seus dados no banco de dados*/
+			turmaAtualizada.setId(turma.getId());
+			turmaAtualizada.setProfessor(professorDaTurma);
+			TurmaBC.save(turmaAtualizada);
+			
+			//A página pricipal é retornada
+			mv.clear();
+			mv.setViewName("index");
+		}
+		
+		mv.addObject("mensagemErro", mensagemErro);
+
+		
+		return mv;
 	}
 	
 	@GetMapping("deletarturma/{id}")

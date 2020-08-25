@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3;org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
-<meta charset="UTF-8">
-<title th:text="${titulo}? |${titulo} Professor| : _">Cadastrar Professor</title>
+	<meta charset="UTF-8">
+	<link th:href="@{/base.css}" rel="stylesheet" />
+	<link th:href="@{/cadastro.css}" rel="stylesheet" />
+	<title th:text="${titulo}? |${titulo} Professor| : _">Cadastrar Professor</title>
 </head>
 <body>
+	
+	<a href="/" class="botao-menor botao" >Voltar</a>
+	
 	<h1 th:text="${titulo}? |${titulo} Professor| : _"> Cadastrar Professor</h1>
+	
 	<form th:action="${titulo}? _ : 'professor'" method="post" >
 		<label>Nome</label> <br/>
 		<input name="nome" type="text" placeholder="Nome" th:value="${professor}? ${professor.nome} : _"> <br/>
@@ -13,7 +19,7 @@
 		<input name="cpf" type="text" placeholder="CPF"  th:value="${professor}? ${professor.cpf} : _"> <br/>
 		<label>Disciplina</label> <br/>
 		<input name="disciplina" type="text" placeholder="Disciplina"  th:value="${professor}? ${professor.disciplina} : _"> <br/>
-		<button type="submit"  th:text="${titulo}? ${titulo} : _" >Cadastrar</button>
+		<button type="submit"  th:text="${titulo}? ${titulo} : _"  class="botao" >Cadastrar</button>
 	</form>
 </body>
 </html>

@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3;org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<link th:href="@{/base.css}" rel="stylesheet" />
+	<link th:href="@{/index.css}" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+	<title>SigSaúde</title>
 </head>
 <body>
-<h1>SigSaúde</h1>
-<a href="/cadastroprofessor">Cadastrar professor</a> <br/>
-<a href="/cadastroturma">Cadastrar turma</a> <br/>
-<a href="/cadastroaluno">Cadastrar aluno</a> <br/>
-<a href="/turmas">Consultar turmas</a> <br/>
-<a href="/alunos">Consultar alunos</a> <br/>
-<a href="/professores">Consultar professores</a> <br/>
+<header>
+	<h1>SigSaúde</h1>
+</header>
+
+<main>
+	<div id="professores" class="quadrado">
+		<a class="botao" href="/cadastroprofessor">Cadastrar professor</a> <br/>
+		<a class="botao" href="/professores">Consultar professores</a> <br/> 
+	</div>
+	
+	<div id="turmas" class="quadrado">
+		<a class="botao" href="/cadastroturma">Cadastrar turma</a> <br/>
+		<a class="botao" href="/turmas">Consultar turmas</a> <br/>  
+	</div>
+	
+	<div id="alunos" class="quadrado">
+		<a class="botao" href="/cadastroaluno">Cadastrar aluno</a> <br/>
+		<a class="botao" href="/alunos">Consultar alunos</a> <br/>
+	</div>
+</main>
+	<p class="erro" th:text="${mensagemErro}" th:if="${mensagemErro}"></p>
+
+
 </body>
 </html>

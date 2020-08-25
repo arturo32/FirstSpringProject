@@ -6,8 +6,8 @@ html, body{
 	text-align: center;
 }
 
-h1{
-	padding: 2%;
+h1 {
+	color: #fff !important;
 }
 
 table{
@@ -16,8 +16,27 @@ table{
 	width: 70%;
 }
 
-td{
-	border: 1px solid black;
+tr:nth-child(even) {
+	background-color: #3e9594;
+}
+
+th, td{
 	padding: 13px;
+	font-family: Arial, sans-serif;
 	text-align: left;
+	color: #eee;
+}
+
+td.acoes {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+th.acoes {
+	text-align: center;
+}
+
+.acoes .botao-menor{
+	position: initial !important;
 }

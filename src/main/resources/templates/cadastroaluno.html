@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3;org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
-<meta charset="UTF-8">
-<title th:text="${titulo}? |${titulo} Aluno| : _">Cadastrar Aluno</title>
+	<meta charset="UTF-8">
+	<link th:href="@{/base.css}" rel="stylesheet" />
+	<link th:href="@{/cadastro.css}" rel="stylesheet" />
+	<title th:text="${titulo}? |${titulo} Aluno| : _">Cadastrar Aluno</title>
 </head>
 <body>
+	
+	<a href="/" class="botao-menor botao" >Voltar</a>
+	
 	<h1 th:text="${titulo}? |${titulo} Aluno| : _"> Cadastrar Aluno</h1>
+	
 	<form th:action="${titulo}? _ : 'aluno'" method="post" >
 		<label>Nome</label> <br/>
 		<input name="nome" type="text" placeholder="Nome"  th:value="${aluno}? ${aluno.nome} : _"> <br/>
@@ -15,7 +21,10 @@
 		<input name="matricula" type="number" placeholder="Matricula"  th:value="${aluno}? ${aluno.matricula} : _"> <br/>
 		<label>Turma</label> <br/>
 		<input name="turma.sala" type="text" placeholder="Sala da turma" th:value="${aluno}? (${aluno.turma.sala}) : _"> <br/>
-		<button type="submit" th:text="${titulo}? ${titulo} : _" >Cadastrar</button>
+		<button type="submit" th:text="${titulo}? ${titulo} : _" class="botao" >Cadastrar</button>
 	</form>
+	
+	<p class="erro" th:text="${mensagemErro}" th:if="${mensagemErro}" ></p>
+	
 </body>
 </html>
